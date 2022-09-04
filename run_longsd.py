@@ -5,13 +5,15 @@ import requests
 import os
 import logging
 import string
+import torch.multiprocessing as mp
 
-from sd import run_model_from_prompt as sd_model
+from sd import load_model as load_sd, run_model as run_sd
 
 
 OPENAI_TOKEN = os.environ['OPENAI_TOKEN']
 logger = logging.getLogger('run_longsd')
 logging.basicConfig(level=logging.DEBUG)
+sd_model = load_sd()
 
 def get_image_prompts(filename, text, overwrite_prompts):
     filepath = f"image_prompts/{filename.split('.')[0]}.json"
@@ -85,21 +87,20 @@ def get_image_prompts(filename, text, overwrite_prompts):
     return image_prompts
 
 
-def run_text_to_image(save_folder, image_prompts, save_images=True):
-    images = []
+def run_text_to_image(args, save_images=True):
+    prompt = args['prompt']
+    section = args['section']
+    save_folder = args['save_folder']
 
-    for section, prompts in image_prompts.items():
-        for prompt in prompts:
-            image = sd_model(prompt) # PIL
+    image = run_sd(sd_model, prompt) # PIL
+    
+    if save_images:
+        save_prompt_name = prompt[:100].replace(' ', '_')
+        image_name = f'{section}-{save_prompt_name}-{str(int(time.time()))}'
+        image_path = f'{save_folder}/{image_name}.png' 
+        image.save(image_path)
 
-            if save_images:
-                save_prompt_name = prompt[:100].replace(' ', '_')
-                image_name = f'{section}-{save_prompt_name}-{str(int(time.time()))}'
-                image_path = f'{save_folder}/{image_name}.png' 
-                image.save(image_path)
-
-            images.append(image)
-    return images
+    return image
 
 
 def main():
@@ -107,6 +108,9 @@ def main():
     parser.add_argument("--files", "-f", type=str, required=True, nargs='+', help="File for text")
     parser.add_argument("--overwrite_prompts", "-o", action='store_true', help="Overwrite json file image prompts")
     args = parser.parse_args()
+    
+    mp.set_start_method("spawn", force=True)
+    multi_pool = mp.Pool(processes=3)
 
     files = args.files
     for file in files:
@@ -120,8 +124,23 @@ def main():
             text = f.read()
 
         image_prompts = get_image_prompts(file, text, overwrite_prompts=args.overwrite_prompts)
-        run_text_to_image(save_folder, image_prompts)
+    
+        sd_inputs = []
+        for section, prompts in image_prompts.items():
+            for prompt in prompts:
+                sd_input = {
+                    'prompt': prompt,
+                    'section': section,
+                    'save_folder': save_folder,
+                }
+                
+                sd_inputs.append(sd_input)
+        logger.debug(sd_inputs)
 
+        images = multi_pool.map(run_text_to_image, sd_inputs)
+        multi_pool.close()
+        multi_pool.join()
+        
 
 if __name__ == "__main__":
     main()

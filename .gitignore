@@ -1,0 +1,6 @@
+__pycache__/
+texts/
+image_prompts/
+images/
+*.swp
+openaikey.sh

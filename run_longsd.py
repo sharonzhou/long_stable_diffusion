@@ -5,7 +5,10 @@ import requests
 import os
 import logging
 import string
+
+import torch
 import torch.multiprocessing as mp
+import torch.distributed as dist
 
 from sd import load_model as load_sd, run_model as run_sd
 
@@ -87,10 +90,19 @@ def get_image_prompts(filename, text, overwrite_prompts):
     return image_prompts
 
 
-def run_text_to_image(args, save_images=True):
-    prompt = args['prompt']
-    section = args['section']
-    save_folder = args['save_folder']
+# def run_text_to_image(args, save_images=True):
+def run_text_to_image(rank, world_size, args, save_images=True):
+    print(args)
+    prompt = args.prompt
+    section = args.section
+    save_folder = args.save_folder
+
+    # prompt = args['prompt']
+    # section = args['section']
+    # save_folder = args['save_folder']
+
+    dist.init_process_group("nccl", rank=rank, world_size=world_size)
+    sd_model = sd_model.to(rank)
 
     image = run_sd(sd_model, prompt) # PIL
     
@@ -100,8 +112,8 @@ def run_text_to_image(args, save_images=True):
         image_path = f'{save_folder}/{image_name}.png' 
         image.save(image_path)
 
+    dist.destroy_process_group()
     return image
-
 
 def main():
     parser = argparse.ArgumentParser()
@@ -110,8 +122,8 @@ def main():
     args = parser.parse_args()
     
     mp.set_start_method("spawn", force=True)
-    multi_pool = mp.Pool(processes=3)
-
+    num_gpus = torch.cuda.device_count()
+    
     files = args.files
     for file in files:
 
@@ -137,9 +149,10 @@ def main():
                 sd_inputs.append(sd_input)
         logger.debug(sd_inputs)
 
-        images = multi_pool.map(run_text_to_image, sd_inputs)
-        multi_pool.close()
-        multi_pool.join()
+        world_size = num_gpus
+        mp.spawn(run_text_to_image, args=(world_size, args), nprocs=world_size, join=True)
+        
+        print(f'Done. Check {save_folder} for your images.')
         
 
 if __name__ == "__main__":

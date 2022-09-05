@@ -170,7 +170,6 @@ def main():
         "-n", 
         default=3, 
         type=int, 
-        choices=(1,2,3), 
         help="Num processes for gpu multiprocessing"
     )
     args = parser.parse_args()

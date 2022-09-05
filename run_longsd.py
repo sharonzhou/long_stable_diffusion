@@ -5,6 +5,8 @@ import requests
 import os
 import logging
 import string
+
+import torch
 import torch.multiprocessing as mp
 
 from sd import load_model as load_sd, run_model as run_sd
@@ -108,9 +110,10 @@ def main():
     parser.add_argument("--files", "-f", type=str, required=True, nargs='+', help="File for text")
     parser.add_argument("--overwrite_prompts", "-o", action='store_true', help="Overwrite json file image prompts")
     args = parser.parse_args()
-    
+
+    torch.cuda.empty_cache()    
     mp.set_start_method("spawn", force=True)
-    multi_pool = mp.Pool(processes=3)
+    pool = mp.Pool(processes=3)
 
     files = args.files
     for file in files:
@@ -137,9 +140,10 @@ def main():
                 sd_inputs.append(sd_input)
         logger.debug(sd_inputs)
 
-        images = multi_pool.map(run_text_to_image, sd_inputs)
-        multi_pool.close()
-        multi_pool.join()
+        images = pool.map(run_text_to_image, sd_inputs)
+        pool.close()
+        pool.join()
+        logger.info('Complete')
         
 
 if __name__ == "__main__":

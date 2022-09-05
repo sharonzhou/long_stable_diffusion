@@ -5,5 +5,7 @@ image_prompts/
 !image_prompts/README.md
 images/
 !images/README.md
+docx/
+!docx/README.md
 *.swp
 openaikey.sh

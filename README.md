@@ -39,6 +39,8 @@ OK, before you run it like that.
 `images`: Generated images by Stable Diffusion based on GPT-3's image prompts.
 `docx/`: Microsoft Word document for a text with images and their prompts all in one.
 
+`clean_lexica.py`: Preprocessing step for Stable Diffusion prompts from Lexica - clean up the prompts and put them into a single file.
+`effective_prompts_fs.txt`: Effective "prompt-English" to use for few-shot translation from English GPT-3 prompts to prompt-English (1884 tokens).
 
 ### TODOs
 - [x] Pipeline of asking GPT3 for image prompts
@@ -46,7 +48,10 @@ OK, before you run it like that.
 - [x] Multiprocessing to max out a single GPU
 - [x] GPU multiprocessing stable diffusion
 - [x] Docx dump of images and image prompts
-- [ ] Translation layer between English prompt and "prompt English" (lexica)
+- [x] Translation layer between English prompt and "prompt English" (lexica)
 - [ ] Walkthrough video of code
 - [x] Flesh out readme
 - [ ] Open source
+
+### Future
+- [ ] Translation from English to 'prompt English' can be improved with: finetuned model with several million data samples (instead of 36)

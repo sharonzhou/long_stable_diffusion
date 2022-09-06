@@ -10,7 +10,7 @@ import glob
 import torch
 import torch.multiprocessing as torch_mp
 
-from sd import load_model as load_sd, run_model as run_sd
+from sd import load_model as load_sd, run_model as run_sd, add_prompt_modifiers
 from dump_docx import dump_images_captions_docx
 
 
@@ -102,7 +102,8 @@ def run_text_to_image(args):
     section = args['section']
     save_folder = args['save_folder']
 
-    image = run_sd(sd_model, prompt) # PIL
+    prompt = add_prompt_modifiers(prompt)
+    image = run_sd(sd_model, prompt) # PIL output
     
     save_prompt_name = prompt[:100].replace(' ', '_')
     image_name = f'{section}-{save_prompt_name}-{str(int(time.time()))}'

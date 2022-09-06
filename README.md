@@ -3,6 +3,11 @@ e.g. story -> Stable Diffusion -> illustrations
 
 Right now, Stable Diffusion can only take in a short prompt. What if you want to illustrate a full story? Cue Long Stable Diffusion, a pipeline of generative models to do just that with just a bash script!
 
+### Come at me with an example?
+You're in luck: We just published [Never Hire a Herd of Goats to Mow your Lawn](https://storiesby.ai/p/never-hire-a-herd-of-goats-to-mow), an AI-generated story illustrated by this repo.
+
+![Goat illustrations](https://user-images.githubusercontent.com/2941408/188747682-a751e2be-554e-4d05-ac08-a557d04b221a.png)
+
 ### Steps
 1. Start with long-form text that you want accompanying images for, e.g. a story to illustrate.
 2. Ask GPT-3 for several illustration ideas for beginning, middle, end, via the OpenAI API.
@@ -44,16 +49,18 @@ Multi-processing is optimized for 2 Titan RTXs, with 24GB RAM each. Changing the
 
 Changing the number of processes for each GPU is an argument that can be passed in through `run_longsd.sh` as `-n <num_processes_per_gpu>` for each run. This is an int used in `longsd.py`. I've found that my GPUs can handle 3, but are happier with 2.
 
-### TODOs
+### Complete
 - [x] Pipeline of asking GPT3 for image prompts
 - [x] Image prompts to stable diffusion
 - [x] Multiprocessing to max out a single GPU
 - [x] GPU multiprocessing stable diffusion
 - [x] Docx dump of images and image prompts
 - [x] Translation layer between English prompt and "prompt English" (lexica)
-- [ ] Walkthrough video of code
 - [x] Flesh out readme
 - [x] Open source
+
+### Todo
+- [ ] Walkthrough video of code
 
 ### Future
 - [ ] Translation from English to 'prompt English' can be improved with: finetuned model with several million data samples (instead of 36)

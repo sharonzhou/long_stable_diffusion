@@ -18,7 +18,7 @@ def load_model():
 
 def run_model(pipe, prompt, save_image=False):
     with autocast("cuda"):
-        image = pipe(prompt)["sample"][0]
+        image = pipe(prompt, height=512, width=768)["sample"][0]
 
     if save_image:
         ts = str(int(time.time()))
@@ -63,9 +63,12 @@ def add_prompt_modifiers(plain_prompt):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--prompt", "-p", type=str, help="Prompt into model")
+    parser.add_argument("--promptgen", "-g", action='store_true', help="Use GPT-3 to prompt engineer plain English to prompt English")
     args = parser.parse_args()
 
-    prompt = add_prompt_modifiers(args.prompt)
+    prompt = args.prompt
+    if args.promptgen:
+        prompt = add_prompt_modifiers(prompt)
     pipe = load_model()
     run_model(pipe, prompt, save_image=True)
 

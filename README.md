@@ -53,7 +53,7 @@ Changing the number of processes for each GPU is an argument that can be passed 
 - [x] Translation layer between English prompt and "prompt English" (lexica)
 - [ ] Walkthrough video of code
 - [x] Flesh out readme
-- [ ] Open source
+- [x] Open source
 
 ### Future
 - [ ] Translation from English to 'prompt English' can be improved with: finetuned model with several million data samples (instead of 36)

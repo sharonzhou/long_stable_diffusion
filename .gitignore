@@ -9,3 +9,4 @@ docx/
 !docx/README.md
 *.swp
 openaikey.sh
+lexica_prompts.txt

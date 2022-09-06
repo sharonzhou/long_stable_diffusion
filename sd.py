@@ -17,8 +17,8 @@ def run_model(pipe, prompt, save_image=False):
         image = pipe(prompt)["sample"][0]
 
     if save_image:
-        image_id = str(int(time.time()))
-        image_name = f"sample-{prompt[:100]}-{image_id}"
+        ts = str(int(time.time()))
+        image_name = f"sample-{prompt[:100].replace(' ', '_')}-{ts}.png"
         print(f"Image name is {image_name}")
         image.save(image_name)
     
@@ -31,7 +31,7 @@ def main():
     args = parser.parse_args()
 
     pipe = load_model()
-    run_model(pipe, args.prompt)
+    run_model(pipe, args.prompt, save_image=True)
 
 
 if __name__ == "__main__":

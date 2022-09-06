@@ -3,6 +3,8 @@ texts/
 !texts/README.md
 image_prompts/
 !image_prompts/README.md
+engineered_image_prompts/
+!engineered_image_prompts/README.md
 images/
 !images/README.md
 docx/

@@ -38,20 +38,15 @@ def add_prompt_modifiers(plain_prompt):
     response = requests.post(
         "https://api.openai.com/v1/completions",
         headers={
-            'accept': "*/*",
-            "accept-language": "en-US,en;q=0.9",
             'authorization': "Bearer " + OPENAI_TOKEN,
             "content-type": "application/json",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "sec-gpc": "1",
         },
         json={
             "model": "davinci",
             "prompt": prompt,
             "max_tokens": 50,
             "temperature": 0.7,
+            "stop": "\n",
         })
 
     text = response.text

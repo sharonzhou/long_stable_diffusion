@@ -26,83 +26,114 @@ logging.basicConfig(level=logging.DEBUG)
 sd_model = load_sd()
 sections = ["start", "middle", "end"]
 
-def get_image_prompts(filename, text, overwrite_prompts):
-    filepath = f"image_prompts/{filename.split('.')[0]}.json"
-    filepath_all = f"image_prompts/{filename.split('.')[0]}-all.txt"
-    if os.path.exists(filepath) and not overwrite_prompts:
-        logger.debug(f'Reading from existing {filepath}...')
-        with open(filepath) as f:
-            image_prompts = json.load(f)
-    else:
-        suffix_template = "\n\nRecommend five different detailed, logo-free, sign-free images to accompany the previous text that illustrate the {} of this text: 1)"
-        image_prompts = { s: [] for s in sections }
-        for section in sections:
-            suffix = suffix_template.format(section)
-            prompt = text + suffix
 
-            logger.debug(f'Generating image prompts for {section}...')
+def generate_image_prompts(text, filename):
+    suffix_template = "\n\nRecommend five different detailed, logo-free, sign-free images to accompany the previous text that illustrate the {} of this text: 1)"
+    image_prompts = { s: [] for s in sections }
+    for section in sections:
+        suffix = suffix_template.format(section)
+        prompt = text + suffix
 
-            response = requests.post("https://api.openai.com/v1/completions",
-                                    headers={
-                                        'accept': "*/*",
-                                        "accept-language": "en-US,en;q=0.9",
-                                        'authorization': "Bearer " + OPENAI_TOKEN,
-                                        "content-type": "application/json",
-                                        "sec-fetch-dest": "empty",
-                                        "sec-fetch-mode": "cors",
-                                        "sec-fetch-site": "same-origin",
-                                        "sec-gpc": "1",
-                                    },
-                                    json={
-                                        "model": "text-davinci-002",
-                                        "prompt": prompt,
-                                        "max_tokens": 256,
-                                        "temperature": 0.8,
-                                    })
-            raw_response = response.text
-            logger.debug(raw_response)
-            try:
-                result = json.loads(raw_response)
-            except:
-                logger.debug('Cannot load parse raw response on get ideas', raw_response)
-                return 'Error', 500
-            
-            result = result['choices'][0]['text']
-            result_list = result.strip().split(")") # removes space and number
+        logger.debug(f'Generating image prompts for {section}...')
 
-            clean_result_list = []
-            for i, r in enumerate(result_list):
-                res = r.strip()
-                if not res:
-                    continue
-
-                if i < len(result_list) - 1:
-                    res = res[:-2]
-                
-                # Remove punctuation
-                res = res.translate(str.maketrans('', '', string.punctuation))
-                
-                clean_result_list.append(res)
-            image_prompts[section].extend(clean_result_list)
+        response = requests.post(
+            "https://api.openai.com/v1/completions",
+            headers={
+                'authorization': "Bearer " + OPENAI_TOKEN,
+                "content-type": "application/json",
+            },
+            json={
+                "model": "text-davinci-002",
+                "prompt": prompt,
+                "max_tokens": 256,
+                "temperature": 0.8,
+            }
+        )
+        text = response.text
+        logger.debug(text)
+        try:
+            result = json.loads(text)
+        except:
+            raise Exception(f'Cannot load: {text}, {response}')
         
-        # Store image prompts
-        logger.debug(f'Writing image prompts to {filepath_all}...')
-        with open(filepath_all, 'a') as f:
-            f.write(json.dumps(image_prompts, indent=4))
-        logger.debug(f'Writing image prompts to {filepath}...')
-        with open(filepath, 'w') as f:
-            f.write(json.dumps(image_prompts, indent=4))
+        result = result['choices'][0]['text']
+        result_list = result.strip().split(")") # removes space and number
+
+        clean_result_list = []
+        for i, r in enumerate(result_list):
+            res = r.strip()
+            if not res:
+                continue
+
+            if i < len(result_list) - 1:
+                res = res[:-2]
+            
+            # Remove punctuation
+            res = res.translate(str.maketrans('', '', string.punctuation))
+
+            clean_result_list.append(res)
+        image_prompts[section].extend(clean_result_list)
+    
+    # Store image prompts
+    filepath = f'image_prompts/{filename}.json'
+    logger.debug(f'Writing image prompts to {filepath}...')
+    with open(filepath, 'w') as f:
+        f.write(json.dumps(image_prompts, indent=4))
+    
+    filepath_all = f'image_prompts/{filename}-all.txt'
+    logger.debug(f'Writing image prompts to {filepath_all}...')
+    with open(filepath_all, 'a') as f:
+        f.write(json.dumps(image_prompts, indent=4))
+        f.write('\n')
+        f.write(json.dumps(image_prompts, indent=4))
+        f.write('\n')
     
     logger.debug(image_prompts)
+
     return image_prompts
 
+def make_image_prompts(filename, text, overwrite_prompts):
+    filename = filename.split('.')[0]
+    
+    engineered_filepath = f"engineered_image_prompts/{filename}.json"
+    engineered_filepath_all = f"engineered_image_prompts/{filename}-all.txt"
+    
+    if os.path.exists(engineered_filepath) and not overwrite_prompts:
+        logger.debug(f'Reading from existing {engineered_filepath}...')
+        with open(engineered_filepath) as f:
+            engineered_prompts = json.load(f)
+    else:
+        image_prompts = generate_image_prompts(text, filename)
+
+        # TODO: extractive summarization from long-form text as additional prompts to engineer and input into Stable Diffusion
+
+        # Engineer prompts (add modifiers to image prompts)
+        engineered_prompts = { s: [] for s in sections }
+        for section, prompts in image_prompts.items():
+            for prompt in prompts:
+                engineered_prompt = add_prompt_modifiers(prompt)
+                engineered_prompts[section].append(engineered_prompt)
+
+        # Store engineered image prompts
+        logger.debug(f'Writing engineered image prompts to {engineered_filepath_all}...')
+        with open(engineered_filepath_all, 'a') as f:
+            f.write(json.dumps(engineered_prompts, indent=4))
+            f.write('\n')
+            f.write(json.dumps(engineered_prompts, indent=4))
+            f.write('\n')
+
+        logger.debug(f'Writing engineered image prompts to {engineered_filepath}...')
+        with open(engineered_filepath, 'w') as f:
+            f.write(json.dumps(engineered_prompts, indent=4))
+    
+    logger.debug(engineered_prompts)
+    return engineered_prompts
 
 def run_text_to_image(args):
     prompt = args['prompt']
     section = args['section']
     save_folder = args['save_folder']
 
-    prompt = add_prompt_modifiers(prompt)
     image = run_sd(sd_model, prompt) # PIL output
     
     save_prompt_name = prompt[:100].replace(' ', '_')
@@ -132,13 +163,14 @@ def setup(file):
 
 def prepare_sd_inputs(image_prompts, save_folder):
     sd_inputs = []
-    completed_sections = []
+
+    section_counts = {}
     for s in sections:
-        if len(glob.glob(f'{save_folder}/{s}-*.png')) >= 5:
-            completed_sections.append(s)
-    for section, prompts in image_prompts.items():
-        if section in completed_sections:
-            continue
+        section_counts[s] = len(glob.glob(f'{save_folder}/{s}-*.png')) 
+
+    # Generate, sorted by the section that has the least images generated
+    for section in sorted(section_counts, key=lambda k: section_counts[k]):
+        prompts = image_prompts[section]
         for prompt in prompts:
             sd_input = {
                 'prompt': prompt,
@@ -178,7 +210,7 @@ def main():
     files = args.files
     for file in files:
         text, save_folder = setup(file)
-        image_prompts = get_image_prompts(file, text, overwrite_prompts=args.overwrite_prompts)
+        image_prompts = make_image_prompts(file, text, overwrite_prompts=args.overwrite_prompts)
         sd_inputs = prepare_sd_inputs(image_prompts, save_folder)
         prompts_and_image_paths = gpu_multiprocess(sd_inputs, args.num_gpu_processes)
         dump_images_captions_docx(file, prompts_and_image_paths)

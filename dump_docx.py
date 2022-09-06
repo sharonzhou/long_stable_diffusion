@@ -1,6 +1,7 @@
 import argparse
 import glob
 import os
+import time
 
 from docx import Document
 from docx.shared import Inches
@@ -15,7 +16,8 @@ def dump_images_captions_docx(title, prompts_and_image_paths):
 
     title = title.split('.')[0]
     title = title.replace('_', ' ').title()
-    document.save(f'docx/{title} - Illustrations.docx')
+    ts = int(time.time())
+    document.save(f'docx/{title} - Illustrations - {ts}.docx')
 
 
 if __name__ == "__main__":

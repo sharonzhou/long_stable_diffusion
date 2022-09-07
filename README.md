@@ -4,7 +4,7 @@ e.g. story -> Stable Diffusion -> illustrations
 Right now, Stable Diffusion can only take in a short prompt. What if you want to illustrate a full story? Cue Long Stable Diffusion, a pipeline of generative models to do just that with just a bash script!
 
 ### Come at me with an example?
-You're in luck: We just published [Never Hire a Herd of Goats to Mow your Lawn](https://storiesby.ai/p/never-hire-a-herd-of-goats-to-mow), an AI-generated story illustrated by this repo.
+Yep! We just published [Never Hire a Herd of Goats to Mow your Lawn](https://storiesby.ai/p/never-hire-a-herd-of-goats-to-mow), an AI-generated story illustrated by this repo.
 
 ![Goat illustrations](https://user-images.githubusercontent.com/2941408/188747682-a751e2be-554e-4d05-ac08-a557d04b221a.png)
 
@@ -22,13 +22,17 @@ This was also just a weekend hackathon project to reward myself for doing a lot 
 
 ## Run
 This bash script runs what you need. It assumes 2 GPUs with 24GB memory each. See the note above, under Steps, to change this assumption for your compute needs. I had too much fun with multiprocessing and making it faster.
+
 `bash run_longsd.sh <name_of_txtfile_in_texts_dir>`
 
-**What you need**
-OK, before you run it like that. 
+#### What you need before you run it like that
 - Install the requirements
 - Make sure you set your OpenAI API key, e.g. in terminal `export OPENAI_TOKEN=<your_token>`
 - Then, put your favorite story or article in a `.txt` file in the `texts/` folder
+
+Check out the files for the example text, **Three Little Pigs**.
+
+![threelittlepigs](https://user-images.githubusercontent.com/2941408/188760072-9765b085-1763-466e-8944-d4b9ecbb755b.png)
 
 ### Files and folders
 - `run_longsd.sh`: This is the main entry script into the program to parallelize across GPUs easily.
@@ -61,6 +65,4 @@ Changing the number of processes for each GPU is an argument that can be passed 
 
 ### Todo
 - [ ] Walkthrough video of code
-
-### Future
 - [ ] Translation from English to 'prompt English' can be improved with: finetuned model with several million data samples (instead of 36)

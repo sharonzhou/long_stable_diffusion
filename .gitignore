@@ -1,10 +1,13 @@
 __pycache__/
 texts/
 !texts/README.md
+!texts/three_little_pigs.txt
 image_prompts/
 !image_prompts/README.md
+!image_prompts/three_little_pigs.json
 engineered_image_prompts/
 !engineered_image_prompts/README.md
+!engineered_image_prompts/three_little_pigs.json
 images/
 !images/README.md
 docx/
@@ -12,3 +15,4 @@ docx/
 *.swp
 openaikey.sh
 lexica_prompts.txt
+sample-*.png

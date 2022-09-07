@@ -23,7 +23,9 @@ This was also just a weekend hackathon project to reward myself for doing a lot 
 ## Run
 This bash script runs what you need. It assumes 2 GPUs with 24GB memory each. See the note above, under Steps, to change this assumption for your compute needs. I had too much fun with multiprocessing and making it faster.
 
-`bash run_longsd.sh <name_of_txtfile_in_texts_dir>`
+`bash run_longsd.sh three_little_pigs`
+
+To run your own text, replace `three_little_pigs` with the name of your new `.txt` file, put in the `texts/` folder.
 
 #### What you need before you run it like that
 - Install the requirements

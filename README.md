@@ -84,7 +84,8 @@ Changing the number of processes for each GPU is an argument that can be passed 
 ### Todo
 - [ ] Walkthrough video of code
 - [ ] Replace stable_diffusion.py with txt2img.py from CompViz stable-diffusion repo
-- [ ] Add support for configuring image generation (based on txt2img.py)
+- [ ] Support for configuring image generation (based on txt2img.py)
+- [ ] Support for different content types (fiction/blog post/essay/news article)
 - [ ] 'summary+extract' method
 - [ ] output to txt
 - [ ] output to markdown

@@ -6,7 +6,6 @@ import time
 from docx import Document
 from docx.shared import Inches
 
-
 def dump_images_captions_docx(title, prompts_and_image_paths):
     document = Document()
 
@@ -23,11 +22,11 @@ def dump_images_captions_docx(title, prompts_and_image_paths):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--files", 
-        "-f", 
-        type=str, 
-        required=True, 
-        nargs='+', 
+        "--files",
+        "-f",
+        type=str,
+        required=True,
+        nargs='+',
         help="File for text"
     )
     args = parser.parse_args()
@@ -45,7 +44,7 @@ if __name__ == "__main__":
 
             # replace underscores with spaces in prompt
             prompt = prompt.replace('_', ' ')
-            
+
             prompts.append(prompt)
 
         dump_images_captions_docx(file, zip(prompts, image_paths))

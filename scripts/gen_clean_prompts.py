@@ -2,7 +2,6 @@ import pandas as pd
 import glob
 import argparse
 
-
 def clean_prompts(csv_dir):
     cleaned_prompts = []
 
@@ -34,7 +33,7 @@ def clean_prompts(csv_dir):
 
             print(cleaned_prompt)
             cleaned_prompts.append(cleaned_prompt)
-    
+
     # Remove duplicates
     cleaned_prompts = list(set(cleaned_prompts))
     return cleaned_prompts
@@ -43,10 +42,10 @@ def clean_prompts(csv_dir):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--lexica_dir_path", 
-        "-p", 
-        type=str, 
-        required=True, 
+        "--lexica_dir_path",
+        "-p",
+        type=str,
+        required=True,
         help="Path to Lexica folder with csvs of dump"
     )
     args = parser.parse_args()
@@ -58,7 +57,6 @@ def main():
     with open('lexica_prompts.txt', 'w') as f:
         for p in cleaned_prompts:
             f.write(f'{p}\n') # will mess up multiline prompts
-
 
 if __name__ == "__main__":
     main()

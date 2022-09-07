@@ -25,7 +25,7 @@ def run_model(pipe, prompt, save_image=False):
         image_name = f"sample-{prompt[:100].replace(' ', '_')}-{ts}.png"
         print(f"Image name is {image_name}")
         image.save(image_name)
-    
+
     return image
 
 def add_prompt_modifiers(plain_prompt):
@@ -71,7 +71,6 @@ def main():
         prompt = add_prompt_modifiers(prompt)
     pipe = load_model()
     run_model(pipe, prompt, save_image=True)
-
 
 if __name__ == "__main__":
     main()

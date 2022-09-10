@@ -20,6 +20,7 @@ from gen_docx import dump_images_captions_docx
 OPENAI_TOKEN = os.environ['OPENAI_TOKEN']
 SECTIONS = ["start", "middle", "end"]
 EXTRACT_LENGTH = 100
+EXTRACT_PROMPT_POSTPROCESS = True
 logger = logging.getLogger('run_sd')
 logging.basicConfig(level=logging.DEBUG)
 with torch.no_grad():
@@ -101,7 +102,7 @@ def generate_image_prompts_with_extracts(text):
     for extract in extracts:
         prompt = promt_prefix+'\n~\n'+extract+'---'
         result = query_gpt3(prompt)
-        image_prompts.append(result.strip())
+        image_prompts.append(result.strip().lower().replace('.',','))
     return {'EXTRACTS': image_prompts}
 
 def generate_image_prompts(method, text, filename):
@@ -151,7 +152,15 @@ def make_image_prompts(method, filename, text, overwrite_prompts):
                     engineered_prompt = add_prompt_modifiers(prompt)
                     engineered_prompts[section].append(engineered_prompt)
         else:
-            engineered_prompts = image_prompts
+            if EXTRACT_PROMPT_POSTPROCESS:
+                engineered_prompts = []
+                for prompt in image_prompts['EXTRACTS']:
+                    engineered_prompt = add_prompt_modifiers(prompt)
+                    engineered_prompts.append(engineered_prompt)
+                engineered_prompts = {'EXTRACTS': engineered_prompts}
+            else:
+                engineered_prompts = image_prompts
+
 
         if not os.path.isfile(engineered_filepath_all,):
             with open(engineered_filepath_all, 'w') as fp:

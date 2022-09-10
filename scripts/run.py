@@ -20,7 +20,7 @@ from gen_docx import dump_images_captions_docx
 OPENAI_TOKEN = os.environ['OPENAI_TOKEN']
 SECTIONS = ["start", "middle", "end"]
 EXTRACT_LENGTH = 100
-EXTRACT_PROMPT_POSTPROCESS = True
+EXTRACT_PROMPT_POSTPROCESS = False
 logger = logging.getLogger('run_sd')
 logging.basicConfig(level=logging.DEBUG)
 with torch.no_grad():

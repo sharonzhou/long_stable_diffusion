@@ -16,7 +16,7 @@ def dump_images_captions_docx(title, prompts_and_image_paths):
     title = title.split('.')[0]
     title = title.replace('_', ' ').title()
     ts = int(time.time())
-    document.save(f'docx/{title} - Illustrations - {ts}.docx')
+    document.save(f'outputs/docx/{title} - Illustrations - {ts}.docx')
 
 
 if __name__ == "__main__":

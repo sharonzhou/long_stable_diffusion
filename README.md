@@ -28,6 +28,9 @@ This bash script runs what you need. It assumes 2 GPUs with 24GB memory each. Se
 OK, before you run it like that.
 - Install the requirements
 - Make sure you set your OpenAI API key, e.g. in terminal `export OPENAI_TOKEN=<your_token>`
+- Make sure you have run 'huggingface-cli login' with a valid token
+- Make sure you have access to https://huggingface.co/CompVis/stable-diffusion-v1-4
+- For using extracts method, you need to install nltk and run nltk.download('punkt') in a python shell
 - Then, put your favorite story or article in a `.txt` file in the `texts/` folder
 
 #### Method Selection

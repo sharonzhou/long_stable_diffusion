@@ -1,21 +1,7 @@
-brotlipy==0.7.0
-certifi @ file:///opt/conda/conda-bld/certifi_1655968806487/work/certifi
-cffi @ file:///tmp/abs_98z5h56wf8/croots/recipe/cffi_1659598650955/work
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
-cryptography @ file:///tmp/build/80754af9/cryptography_1652101588599/work
-idna @ file:///tmp/build/80754af9/idna_1637925883363/work
-mkl-fft==1.3.1
-mkl-random @ file:///home/builder/ci_310/mkl_random_1641843545607/work
-mkl-service==2.4.0
-numpy @ file:///tmp/abs_653_j00fmm/croots/recipe/numpy_and_numpy_base_1659432701727/work
-Pillow==9.2.0
-pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
-pyOpenSSL @ file:///opt/conda/conda-bld/pyopenssl_1643788558760/work
-PySocks @ file:///home/builder/ci_310/pysocks_1640793678128/work
-requests @ file:///opt/conda/conda-bld/requests_1657734628632/work
-six @ file:///tmp/build/80754af9/six_1644875935023/work
+diffusers==0.3.0
+docx==0.2.4
+nltk==3.7
+pandas==1.4.4
+python_docx==0.8.11
+requests==2.28.1
 torch==1.12.1
-torchaudio==0.12.1
-torchvision==0.13.1
-typing_extensions @ file:///tmp/abs_ben9emwtky/croots/recipe/typing_extensions_1659638822008/work
-urllib3 @ file:///tmp/abs_5dhwnz6atv/croots/recipe/urllib3_1659110457909/work

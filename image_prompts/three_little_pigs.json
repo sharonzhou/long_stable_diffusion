@@ -1,0 +1,32 @@
+{
+    "start": [
+        "A mother pig with three little pigs",
+        "The three little pigs building their houses",
+        "The wolf huffing and puffing and blowing the straw house down",
+        "The wolf huffing and puffing and blowing the stick house down",
+        "The wolf in the pot of boiling water"
+    ],
+    "middle": [
+        "The three little pigs building their houses",
+        "The wolf huffing and puffing and blowing the straw house down",
+        "The wolf huffing and puffing and blowing the stick house down",
+        "The wolf in the pot of boiling water\n",
+        "A closeup of the three little pigs working on their houses",
+        "The wolf huffing and puffing and blowing the straw house down",
+        "The wolf huffing and puffing and blowing the stick house down",
+        "The wolf in the pot of boiling water",
+        "A closeup of the mother pig with her three little pigs"
+    ],
+    "end": [
+        "A closeup of the three little pigs working on their houses",
+        "The wolf huffing and puffing and blowing the straw house down",
+        "The wolf huffing and puffing and blowing the stick house down",
+        "The wolf in the pot of boiling water",
+        "A closeup of the mother pig with her three little pigs",
+        "A closeup of the three little pigs working on their houses",
+        "The wolf huffing and puffing and blowing the straw house down",
+        "The wolf huffing and puffing and blowing the stick house down",
+        "The wolf in the pot of boiling water",
+        "a closeup of the mother pig with her three little pigs"
+    ]
+}

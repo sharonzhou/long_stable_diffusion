@@ -8,6 +8,10 @@ import torch
 from torch import autocast
 from diffusers import StableDiffusionPipeline
 
+# default to fit into small-ish memory (less than 12G)
+# TODO make configurable via args
+IMAGE_HEIGHT = 512
+IMAGE_WIDTH = 768
 
 def load_model():
     # make sure you're logged in with `huggingface-cli login`
@@ -18,14 +22,14 @@ def load_model():
 
 def run_model(pipe, prompt, save_image=False):
     with autocast("cuda"):
-        image = pipe(prompt, height=512, width=768)["sample"][0]
+        image = pipe(prompt, height=IMAGE_HEIGHT, width=IMAGE_WIDTH)["sample"][0]
 
     if save_image:
         ts = str(int(time.time()))
         image_name = f"sample-{prompt[:100].replace(' ', '_')}-{ts}.png"
         print(f"Image name is {image_name}")
         image.save(image_name)
-    
+
     return image
 
 def add_prompt_modifiers(plain_prompt):

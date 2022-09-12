@@ -1,0 +1,44 @@
+Suggest good images to illustrate for the following extracts from short stories.
+Do not mention names, make the style appropriate for the contents of the extract, and be as detailed as you can.
+---
+You notice things others don’t when you spend your entire life stuck in a tower. Rapunzel knew the best combination of hair products from all available in the realm. She knew the health of the crops by the color of the sunlit fields. She thought it curious that across the Queen’s valley, a stone tower stood apart from the rest of the village, similar to the one in which she was imprisoned. She used her hand mirror to flash light at the other tower."
+
+content: a princess in a tower, using her hand mirror to flash light at the other tower
+style: watercolor
+---
+“My second wish is that you help me expand the Earth.” Zeke was excited about making the wish, but he was a little concerned about the magnitude of his request. “The Earth is getting larger,” the genie confirmed. “But you can’t see it yet.” “When will it spread?” Zeke asked. “How long will it take?” The genie tilted his head and said, “The Earth will be double its current size in ten months, twenty-three days, and eight hours.”
+
+content: the earth expanding to twice its current size
+style: impressionist painting
+---
+I was in the lab the day that the greatest discovery in the history of science was made (though I acknowledge that I may be biased). Our lab put multiverse theory into practice to create controlled, self-contained micro-universes within our own. We programmed the physics inside and watched planets evolve over massive geologic time scales.
+
+content: a crystal ball containing a micro-universe
+style: digital 3D art, high resolution, vivid
+---
+Once, there lived a man who hated mowing his lawn, so he bought a small herd of goats to do it for him. One of the goats was cleverer than the rest. It learned how to ask the man for a drink whenever it was thirsty. The man would bring the goat a drink, and the goat would mow the lawn.
+
+content: a wealthy man bringing a goat a drink so the goat would mow the lawn
+style: oil painting, renaissance, fable
+---
+Philip waited in the dark. The countdown had long since hit zero, the call of "Ready or not..." rang through the trees. Philip crouched in the hollow of a tree beneath a blanket of branches, trembling with the anticipation of being found. Then he trembled because he feared the game was over, they'd forgotten all about him, and he was alone in the woods.
+
+content: a boy hiding in a tree, waiting to be found in a game of hide-and-seek
+style: pencil sketch
+---
+"Is it just me, or is my sourdough starter saying hello?" Nicole added a bread emoji to the end of the Instagram post. She’d carefully framed the shot of bubbles in the flour mixture that appeared to spell out “hi.” Her heart lightened a little. She’d been dumped by Alex the day before, and baking kept her from spending the day crying. She started a new sourdough loaf and spent the day in a haze of memory and home-brewed beer.
+
+content: a woman taking a picture of her sourdough starter that appears to say "hi"
+style: over the shoulder photograph
+---
+He said ' Sharon, what are you doing? The ship isn't even fixed yet!' She replied 'Look, I tried to fix the ship, but it kept blowing up! So, I tried to do something creative with the parts. And I think that this is the result.' She pointed to the creation. Andrey looked at it. It was a strange, weird thing. It looked like a metal face, with two eyes, a nose, and a mouth. 'What is it?' asked Andrey.And Sharon said, 'I don't really know, but I think it's a security camera.'
+
+content:  a woman shows a man her creation made out of the parts of a ship that kept blowing up, it looks like a metal face with two eyes, a nose, and mouth
+style: unreal engine 5, high resolution, detailed
+---
+We were sure that we were already dead. Security cameras that were still online recorded sparks of particles from various universes mixed and annihilating one another. The cameras blinked out as the blight spread. The spread didn't accelerate or slow, but continued relentlessly onward. We were shielded, but our universe was disintegrating and it was a matter of time before the strange interactions dismantled our world, one molecule at a time.
+
+content: security cameras recording sparks of particles from different universes mixed and annihilating one another
+style: CCTV footage, black and white, low resolution
+---
+

@@ -1,4 +1,6 @@
 diffusers==0.2.4
+python_docx==0.8.11
+nltk==3.7
 pandas==1.4.4
 requests==2.28.1
 torch==1.11.0
